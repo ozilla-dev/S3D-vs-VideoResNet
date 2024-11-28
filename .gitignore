@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# Venv
+CV3
+
+# Data
+data
+
 # Distribution / packaging
 .Python
 build/
