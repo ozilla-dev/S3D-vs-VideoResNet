@@ -58,11 +58,18 @@ def split_data(labels_path):
     train_data = pd.read_csv('jester-v1-train.csv', sep=';', header=None)
     test_data = pd.read_csv('jester-v1-validation.csv', sep=';', header=None)
 
+    train_data = train_data.sample(frac=0.005, random_state=42)
     val_data = train_data.sample(frac=0.1, random_state=42)
+    test_data = test_data.sample(frac=0.005, random_state=42)
     train_data = train_data.drop(val_data.index) # remove validation data from training data
     train_data[1] = train_data[1].map(label_encoding)
     val_data[1] = val_data[1].map(label_encoding)
     test_data[1] = test_data[1].map(label_encoding)
+
+    print("Unique labels in training data:", sorted(train_data[1].unique()))
+    print("Unique labels in validation data:", val_data[1].unique())
+    print("Unique labels in test data:", test_data[1].unique())
+    
     
     return train_data, val_data, test_data
 
@@ -118,8 +125,8 @@ def main():
     torch.save(val_dataset, 'val_dataset.pt')
     torch.save(test_dataset, 'test_dataset.pt')
 
-    batch_size = 128
-    num_workers = 4
+    batch_size = 32
+    num_workers = 16
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
