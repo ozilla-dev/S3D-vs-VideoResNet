@@ -10,7 +10,11 @@ __pycache__/
 CV3
 
 # Data
-data
+20bn-jester-v1
+train_data.pt
+val_dataset.pt
+test_dataset.pt
+
 
 # Distribution / packaging
 .Python

@@ -70,7 +70,6 @@ def split_data(labels_path):
     print("Unique labels in validation data:", val_data[1].unique())
     print("Unique labels in test data:", test_data[1].unique())
     
-    
     return train_data, val_data, test_data
 
 def train(model, train_loader, val_loader, criterion, optimizer, num_epochs, device):
@@ -105,6 +104,12 @@ def validate(model, val_loader, criterion, device):
         avg_loss = total_loss / len(val_loader)
     return avg_loss
 
+def save_data(dataset, output_path):
+    data = []
+    for video, label in dataset:
+        data.append((video, label))
+    torch.save(data, output_path)
+
 def main():
     seed = 42
     set_seed(seed)
@@ -121,9 +126,9 @@ def main():
     val_dataset = JesterDataset(val_data, data_path)
     test_dataset = JesterDataset(test_data, data_path)
 
-    torch.save(train_dataset, 'train_dataset.pt')
-    torch.save(val_dataset, 'val_dataset.pt')
-    torch.save(test_dataset, 'test_dataset.pt')
+    save_data(train_dataset, 'train_dataset.pt')
+    save_data(val_dataset, 'val_dataset.pt')
+    save_data(test_dataset, 'test_dataset.pt')
 
     batch_size = 32
     num_workers = 16
