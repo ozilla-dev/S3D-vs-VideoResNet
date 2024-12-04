@@ -14,7 +14,7 @@ CV3
 train_data.pt
 val_dataset.pt
 test_dataset.pt
-
+data
 
 # Distribution / packaging
 .Python
